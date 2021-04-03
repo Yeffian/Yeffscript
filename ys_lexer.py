@@ -4,9 +4,6 @@ from ys_tokentypes import TokenType
 from os import system, name
 import sys
 
-
-DIGITS = 123456789
-
 class Lexer():
     def __init__(self, text):
         self.source = text + '\n' # The actual source code to lex
