@@ -13,7 +13,11 @@ def main():
         token = lexer.get_token()
 
         while token.kind != TokenType.EOF:
-            print(token.kind)
+            if(token.kind == TokenType.NEWLINE):
+                print(f'[{token.kind}]')
+            else: 
+             print(f'[{token.kind} : {token.text}]')
+
             token = lexer.get_token()
 
 if __name__ == '__main__':

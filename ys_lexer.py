@@ -31,7 +31,7 @@ class Lexer():
         return self.source[self.curPos+1]
 
     # Invalid token found, print error message and exit.
-    def abort(self, message, reason):
+    def abort(self, message):
         sys.exit("Lexing error. " + message)
 		
     # Skip whitespace except newlines, which we will use to indicate the end of a statement.
@@ -91,6 +91,33 @@ class Lexer():
                 token = Token(lastChar + self.curChar, TokenType.NOT_EQUALS)
             else:
                 self.abort("Expected != , got !" + self.peek(), None)
+        elif self.curChar == '\"':
+            # Get characters between quotations.
+            self.advance()
+            startPos = self.curPos
+
+            while self.curChar != '\"':
+                if self.curChar == '\r' or self.curChar == '\n' or self.curChar == '\t' or self.curChar == '\\' or self.curChar == '%':
+                    self.abort("Illegal character in string.")
+                self.advance()
+
+            tokText = self.source[startPos : self.curPos] # Get the substring.
+            token = Token(tokText, TokenType.STRING)
+        elif self.curChar.isdigit():
+            startPos = self.curPos
+            while self.peek().isdigit():
+                self.nextChar()
+            if self.peek() == '.': # Decimal
+                self.nextChar()
+
+                # Must have at least one digit after decimal.
+                if not self.peek().isdigit(): 
+                    self.abort("Illegal character in number.")
+                while self.peek().isdigit():
+                    self.nextChar()
+
+            tokText = self.source[startPos : self.curPos + 1] # Get the substring.
+            token = Token(tokText, TokenType.NUMBER)
         elif self.curChar == '\n':
             token = Token(self.curChar, TokenType.NEWLINE)
         elif self.curChar == '\0':
