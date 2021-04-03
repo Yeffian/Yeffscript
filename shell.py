@@ -1,6 +1,5 @@
 from ys_lexer import Lexer
 from ys_tokentypes import TokenType
-
 from ys_replutils import abort
 
 def main():
