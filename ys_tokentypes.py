@@ -16,7 +16,8 @@ class TokenType(enum.Enum):
 	ENDIF = 108
 	WHILE = 109
 	ENDWHILE = 111
-
+	LPAREN = 112
+	RPAREN = 113
 
 	# Operators
 	EQUALS = 201  

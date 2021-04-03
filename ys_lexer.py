@@ -11,6 +11,17 @@ class Lexer():
         self.curPos = -1 # The current position of the lexer
         self.advance()
 
+    
+    @staticmethod
+    def checkIfKeyword(tokenText):
+        for kind in TokenType:
+            # Relies on all keyword enum values being 1XX.
+            if kind.name == tokenText and kind.value >= 100 and kind.value < 200:
+                return kind
+
+        return None
+
+
     # Process the next character.
     def advance(self):
         self.curPos += 1
@@ -57,6 +68,10 @@ class Lexer():
             token = Token(self.curChar, TokenType.ASTERISK)
         elif self.curChar == '/':
             token = Token(self.curChar, TokenType.SLASH)
+        elif self.curChar == ')':
+            token = Token(self.curChar, TokenType.LPAREN)
+        elif self.curChar == '(':
+            token = Token(self.curChar, TokenType.RPAREN)
         elif self.curChar == '=':
             # Check whether this token is = or ==
             if self.peek() == '=':
@@ -103,18 +118,32 @@ class Lexer():
         elif self.curChar.isdigit():
             startPos = self.curPos
             while self.peek().isdigit():
-                self.nextChar()
+                self.advance()
             if self.peek() == '.': # Decimal
-                self.nextChar()
+                self.advance()
 
                 # Must have at least one digit after decimal.
                 if not self.peek().isdigit(): 
                     self.abort("Illegal character in number.")
                 while self.peek().isdigit():
-                    self.nextChar()
+                    self.advance()
 
             tokText = self.source[startPos : self.curPos + 1] # Get the substring.
             token = Token(tokText, TokenType.NUMBER)
+        elif self.curChar.isalpha():
+            # Leading character is a letter, so this must be an identifier or a keyword.
+            # Get all consecutive alpha numeric characters.
+            startPos = self.curPos
+            while self.peek().isalnum():
+                self.advance()
+
+            # Check if the token is in the list of keywords.
+            tokText = self.source[startPos : self.curPos + 1] # Get the substring.
+            keyword = self.checkIfKeyword(tokText)
+            if keyword == None: # Identifier
+                token = Token(tokText, TokenType.IDENT)
+            else:   # Keyword
+                token = Token(tokText, keyword)
         elif self.curChar == '\n':
             token = Token(self.curChar, TokenType.NEWLINE)
         elif self.curChar == '\0':
