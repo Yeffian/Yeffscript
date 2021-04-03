@@ -8,16 +8,17 @@ class TokenType(enum.Enum):
 	STRING = 3
 
 	# Keywords
+	LABEL = 101
+	GOTO = 102
 	PRINT = 103
 	INPUT = 104
-	VAR = 105
+	LET = 105
 	IF = 106
 	THEN = 107
 	ENDIF = 108
 	WHILE = 109
+	REPEAT = 110
 	ENDWHILE = 111
-	LPAREN = 112
-	RPAREN = 113
 
 	# Operators
 	EQUALS = 201  
@@ -31,3 +32,5 @@ class TokenType(enum.Enum):
 	LESS_THAN_OR_EQUAL_TO = 209
 	GREATER_THAN = 210
 	GREATER_THAN_OR_EQUAL_TO = 211
+	LPAREN = 112
+	RPAREN = 113
