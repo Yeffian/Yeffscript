@@ -1,6 +1,6 @@
 from ys_lexer import Lexer
 from ys_tokentypes import TokenType
-from ys_replutils import abort
+from ys_replutils import abort, print_red, print_green
 
 import sys
 
@@ -21,9 +21,9 @@ def main():
         print('TOKEN TREE')
         while token.kind != TokenType.EOF:
             if(token.kind == TokenType.NEWLINE):
-                print(f'├─{token.kind}')
+                print_green(f'├─{token.kind}')
             else: 
-             print(f'├─{token.kind} : {token.text}')
+             print_green(f'├─{token.kind} : {token.text}')
 
             token = lexer.get_token()
 
