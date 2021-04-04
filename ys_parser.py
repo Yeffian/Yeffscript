@@ -2,7 +2,6 @@ import sys
 from ys_lexer import *
 
 # Parser object keeps track of current token and checks if the code matches the grammar.
-# Parser object keeps track of current token and checks if the code matches the grammar.
 class Parser:
     def __init__(self, lexer):
         self.lexer = lexer
@@ -32,9 +31,9 @@ class Parser:
         self.peek_token = self.lexer.get_token()
 
     def is_comparison_operator(self):
-        return (self.check_token(TokenType.GREATERTHAN) or self.check_token(TokenType.GREATERTHANOREQUAL) or
-                self.check_token(TokenType.LESSTHAN) or self.check_token(TokenType.LESSTHANOREQUAL) or self.check_token(TokenType.EQUALSEQUALS) or
-                self.check_token(TokenType.NOTEQUALS))
+        return (self.check_token(TokenType.GREATER_THAN) or self.check_token(TokenType.GREATER_THAN_OR_EQUAL_TO) or
+                self.check_token(TokenType.LESS_THAN) or self.check_token(TokenType.LESS_THAN_OR_EQUAL_TO) or self.check_token(TokenType.DOUBLE_EQUALS) or
+                self.check_token(TokenType.NOT_EQUALS))
 
     def abort(self, message):
         sys.exit("Error. " + message)
