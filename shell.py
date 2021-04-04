@@ -1,7 +1,7 @@
 from ys_lexer import Lexer
 from ys_parser import Parser
 from ys_tokentypes import TokenType
-from ys_replutils import abort, print_red, print_green
+from ys_replutils import *
 
 import sys
 

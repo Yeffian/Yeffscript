@@ -1,8 +1,6 @@
 from ys_token import Token
 from ys_tokentypes import TokenType
 
-from ys_replutils import print_red
-
 from os import system, name
 import sys
 
@@ -42,8 +40,7 @@ class Lexer():
 
     # Invalid token found, print error message and exit.
     def abort(self, message):
-        print_red("Lexing error. " + message)
-        sys.exit()
+        sys.exit("Lexing error. " + message)
 		
     # Skip whitespace except newlines, which we will use to indicate the end of a statement.
     def skip_whitespace(self):
